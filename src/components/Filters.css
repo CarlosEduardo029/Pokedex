@@ -1,0 +1,186 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 2vw, 15px);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.filter-section {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.5vw, 10px);
+  position: relative;
+}
+
+.filter-section label {
+  font-family: 'Press Start 2P', cursive;
+  color: #fff;
+  font-size: clamp(10px, 1.5vw, 12px);
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.filter-section label::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background: #fff;
+  transition: width 0.3s ease;
+}
+
+.filter-section label:hover::after {
+  width: 100%;
+}
+
+.filter-section select {
+  padding: clamp(6px, 1.5vw, 12px);
+  border: 2px solid var(--pokedex-dark);
+  border-radius: 5px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(8px, 1.2vw, 10px);
+  background-color: #98fb98;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--pokedex-dark) 50%),
+                    linear-gradient(135deg, var(--pokedex-dark) 50%, transparent 50%);
+  background-position: 
+    calc(100% - 15px) calc(1em + 2px),
+    calc(100% - 10px) calc(1em + 2px);
+  background-size: 
+    5px 5px,
+    5px 5px;
+  background-repeat: no-repeat;
+}
+
+.filter-section select:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.filter-section select:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 
+    0 0 0 3px rgba(52, 152, 219, 0.25),
+    0 5px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Glassmorphism effect for select */
+.filter-section select {
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  background-color: rgba(152, 251, 152, 0.9);
+}
+
+/* Responsive Layouts */
+@media (min-width: 769px) {
+  .filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: clamp(15px, 3vw, 30px);
+  }
+
+  .filter-section:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 768px) {
+  .filters {
+    gap: 15px;
+    padding: clamp(10px, 2vw, 20px);
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+
+  .filter-section {
+    position: relative;
+    padding: clamp(8px, 1.5vw, 15px);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+
+  .filter-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .filters {
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .filter-section {
+    padding: 8px;
+  }
+
+  .filter-section select {
+    padding: 8px;
+    background-position: 
+      calc(100% - 12px) calc(1em + 1px),
+      calc(100% - 7px) calc(1em + 1px);
+    background-size: 
+      4px 4px,
+      4px 4px;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .filter-section select {
+    background-color: rgba(152, 251, 152, 0.8);
+    color: var(--pokedex-dark);
+  }
+}
+
+/* High Contrast Mode */
+@media (forced-colors: active) {
+  .filter-section select {
+    border: 2px solid CanvasText;
+  }
+  
+  .filter-section label {
+    text-shadow: none;
+  }
+}
+
+/* Animation for select options */
+.filter-section select option {
+  background-color: #98fb98;
+  color: var(--pokedex-dark);
+  padding: 10px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .filter-section select,
+  .filter-section label::after,
+  .filters,
+  .filter-section {
+    transition: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .filters {
+    display: none;
+  }
+}

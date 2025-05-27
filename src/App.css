@@ -1,0 +1,590 @@
+:root {
+  --pokedex-red: #ff0000;
+  --pokedex-accent: #cc0000;
+  --pokedex-dark: #1e1e1e;
+  --screen-bg: #111;
+  --screen-grid: rgba(255, 255, 255, 0.05);
+  --led-blue: #3498db;
+  --led-red: #e74c3c;
+  --led-yellow: #f1c40f;
+  --led-green: #2ecc71;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.app {
+  min-height: 100vh;
+  background: linear-gradient(45deg, #1a1a1a, #2d2d2d);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.pokedex {
+  display: flex;
+  gap: 10px;
+  max-width: 1400px;
+  width: 100%;
+  padding: 20px;
+  transition: opacity 0.5s ease;
+  position: relative;
+}
+
+.pokedex::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: linear-gradient(45deg, var(--pokedex-red), var(--pokedex-accent));
+  border-radius: 25px;
+  z-index: -1;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+}
+
+.pokedex-left {
+  flex: 2;
+  background: linear-gradient(135deg, var(--pokedex-red) 0%, var(--pokedex-accent) 100%);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 
+    inset -5px -5px 15px rgba(0, 0, 0, 0.3),
+    inset 5px 5px 15px rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.pokedex-left-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.light-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.light.large {
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle at 30% 30%, #fff, var(--led-blue));
+  border-radius: 50%;
+  border: 4px solid #fff;
+  box-shadow: 
+    0 0 15px var(--led-blue),
+    inset 0 0 8px rgba(255, 255, 255, 0.8);
+  animation: pulsate 2s infinite;
+}
+
+.lights-small {
+  display: flex;
+  gap: 10px;
+}
+
+.light.small {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.light.small.red { 
+  background: radial-gradient(circle at 30% 30%, #fff, var(--led-red));
+  box-shadow: 0 0 10px var(--led-red);
+}
+
+.light.small.yellow { 
+  background: radial-gradient(circle at 30% 30%, #fff, var(--led-yellow));
+  box-shadow: 0 0 10px var(--led-yellow);
+}
+
+.light.small.green { 
+  background: radial-gradient(circle at 30% 30%, #fff, var(--led-green));
+  box-shadow: 0 0 10px var(--led-green);
+}
+
+.pokedex-screen-container {
+  background: var(--pokedex-dark);
+  border-radius: 15px;
+  padding: 20px;
+  border: 15px solid var(--pokedex-dark);
+  position: relative;
+  overflow: hidden;
+  height: 600px;
+}
+
+.pokedex-screen-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, 0.05) 50%),
+    linear-gradient(transparent 50%, rgba(255, 255, 255, 0.05) 50%);
+  background-size: 4px 4px;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.pokedex-screen {
+  background: #fff;
+  border-radius: 10px;
+  height: 100%;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.pokedex-screen::-webkit-scrollbar {
+  width: 8px;
+}
+
+.pokedex-screen::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.pokedex-screen::-webkit-scrollbar-thumb {
+  background: var(--pokedex-red);
+  border-radius: 4px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.pokedex-left-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.d-pad {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.d-pad-btn {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.d-pad-btn:active {
+  transform: scale(0.95);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.d-pad-btn.up { 
+  top: 0; 
+  left: 42.5px; 
+  border-radius: 5px 5px 0 0;
+  box-shadow: 0 -2px 0 rgba(255, 255, 255, 0.1);
+}
+
+.d-pad-btn.right { 
+  right: 0; 
+  top: 42.5px; 
+  border-radius: 0 5px 5px 0;
+  box-shadow: 2px 0 0 rgba(255, 255, 255, 0.1);
+}
+
+.d-pad-btn.down { 
+  bottom: 0; 
+  left: 42.5px; 
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 2px 0 rgba(255, 255, 255, 0.1);
+}
+
+.d-pad-btn.left { 
+  left: 0; 
+  top: 42.5px; 
+  border-radius: 5px 0 0 5px;
+  box-shadow: -2px 0 0 rgba(255, 255, 255, 0.1);
+}
+
+.d-pad-center {
+  position: absolute;
+  top: 42.5px;
+  left: 42.5px;
+  width: 35px;
+  height: 35px;
+  background: #2a2a2a;
+  border-radius: 5px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.control-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.control-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.control-button:active {
+  transform: scale(0.95);
+}
+
+.control-button.red { 
+  background: linear-gradient(145deg, #ff0000, #cc0000);
+}
+
+.control-button.blue { 
+  background: linear-gradient(145deg, #3498db, #2980b9);
+}
+
+.pokedex-right {
+  flex: 1;
+  background: linear-gradient(135deg, var(--pokedex-red) 0%, var(--pokedex-accent) 100%);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 
+    inset -5px -5px 15px rgba(0, 0, 0, 0.3),
+    inset 5px 5px 15px rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pokedex-right-top h1 {
+  color: #fff;
+  text-shadow: 
+    2px 2px 0 var(--pokedex-dark),
+    -2px 2px 0 var(--pokedex-dark),
+    2px -2px 0 var(--pokedex-dark),
+    -2px -2px 0 var(--pokedex-dark);
+  font-size: 24px;
+  text-align: center;
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.filters-container {
+  background: var(--pokedex-dark);
+  border-radius: 10px;
+  padding: 20px;
+  border: 10px solid var(--pokedex-dark);
+}
+
+.pokedex-info {
+  background: var(--pokedex-dark);
+  border-radius: 10px;
+  padding: 15px;
+  border: 10px solid var(--pokedex-dark);
+  flex-grow: 1;
+}
+
+.info-screen {
+  background: #98fb98;
+  height: 100%;
+  border-radius: 5px;
+  padding: 15px;
+  font-size: 12px;
+  color: var(--pokedex-dark);
+  line-height: 1.8;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.info-screen::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(90deg, transparent 50%, rgba(0, 0, 0, 0.05) 50%),
+    linear-gradient(transparent 50%, rgba(0, 0, 0, 0.05) 50%);
+  background-size: 2px 2px;
+  pointer-events: none;
+}
+
+@keyframes pulsate {
+  0% { opacity: 0.8; box-shadow: 0 0 15px var(--led-blue); }
+  50% { opacity: 1; box-shadow: 0 0 30px var(--led-blue); }
+  100% { opacity: 0.8; box-shadow: 0 0 15px var(--led-blue); }
+}
+
+@media (max-width: 1200px) {
+  .pokedex {
+    flex-direction: column;
+  }
+  
+  .pokedex-right {
+    min-height: 400px;
+  }
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.visible {
+  opacity: 1;
+}
+
+/* Mantenha todas as suas regras atuais e adicione estas novas regras no final do arquivo */
+
+/* Tablets e telas menores */
+@media (max-width: 1200px) {
+  .pokedex {
+    flex-direction: column;
+    height: auto;
+    max-height: 90vh;
+  }
+
+  .pokedex-left,
+  .pokedex-right {
+    width: 100%;
+  }
+
+  .pokedex-screen-container {
+    height: 400px;
+  }
+
+  .pokedex-right {
+    min-height: auto;
+  }
+}
+
+/* Tablets menores e celulares grandes */
+@media (max-width: 768px) {
+  .app {
+    padding: 10px;
+  }
+
+  .pokedex {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .pokedex-left {
+    padding: 20px;
+  }
+
+  .pokedex-left-top {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .light.large {
+    width: 40px;
+    height: 40px;
+  }
+
+  .lights-small {
+    gap: 5px;
+  }
+
+  .light.small {
+    width: 15px;
+    height: 15px;
+  }
+
+  .pokedex-screen-container {
+    height: 350px;
+    padding: 10px;
+    border-width: 10px;
+  }
+
+  .d-pad {
+    width: 100px;
+    height: 100px;
+  }
+
+  .d-pad-btn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .d-pad-btn.up { left: 35px; }
+  .d-pad-btn.right { top: 35px; }
+  .d-pad-btn.down { left: 35px; }
+  .d-pad-btn.left { top: 35px; }
+  .d-pad-center {
+    width: 30px;
+    height: 30px;
+    top: 35px;
+    left: 35px;
+  }
+
+  .control-button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .pokedex-right {
+    padding: 20px;
+  }
+
+  .pokedex-right-top h1 {
+    font-size: 18px;
+  }
+
+  .filters-container,
+  .pokedex-info {
+    padding: 10px;
+    border-width: 5px;
+  }
+}
+
+/* Celulares médios */
+@media (max-width: 480px) {
+  .app {
+    padding: 5px;
+  }
+
+  .pokedex {
+    padding: 5px;
+    gap: 5px;
+  }
+
+  .pokedex-left {
+    padding: 15px;
+  }
+
+  .pokedex-screen-container {
+    height: 300px;
+    padding: 5px;
+    border-width: 8px;
+  }
+
+  .light.large {
+    width: 30px;
+    height: 30px;
+  }
+
+  .light.small {
+    width: 12px;
+    height: 12px;
+  }
+
+  .d-pad {
+    width: 80px;
+    height: 80px;
+  }
+
+  .d-pad-btn {
+    width: 25px;
+    height: 25px;
+  }
+
+  .d-pad-btn.up { left: 27.5px; }
+  .d-pad-btn.right { top: 27.5px; }
+  .d-pad-btn.down { left: 27.5px; }
+  .d-pad-btn.left { top: 27.5px; }
+  .d-pad-center {
+    width: 25px;
+    height: 25px;
+    top: 27.5px;
+    left: 27.5px;
+  }
+
+  .control-button {
+    width: 35px;
+    height: 35px;
+  }
+
+  .pokedex-right-top h1 {
+    font-size: 16px;
+  }
+
+  .info-screen {
+    font-size: 10px;
+    padding: 10px;
+  }
+}
+
+/* Celulares pequenos */
+@media (max-width: 320px) {
+  .pokedex-screen-container {
+    height: 250px;
+  }
+
+  .light.large {
+    width: 25px;
+    height: 25px;
+  }
+
+  .light.small {
+    width: 10px;
+    height: 10px;
+  }
+
+  .d-pad {
+    width: 70px;
+    height: 70px;
+  }
+
+  .control-button {
+    width: 30px;
+    height: 30px;
+  }
+
+  .pokedex-right-top h1 {
+    font-size: 14px;
+  }
+}
+
+/* Suporte para telas altas (dispositivos móveis em modo retrato) */
+@media (min-height: 800px) and (max-width: 768px) {
+  .pokedex-screen-container {
+    height: 45vh;
+  }
+}
+
+/* Orientação paisagem em dispositivos móveis */
+@media (max-height: 500px) and (orientation: landscape) {
+  .pokedex {
+    flex-direction: row;
+  }
+
+  .pokedex-screen-container {
+    height: 250px;
+  }
+
+  .pokedex-left,
+  .pokedex-right {
+    height: 80vh;
+    overflow-y: auto;
+  }
+}
+
+/* Remova barras de rolagem mas mantenha funcionalidade */
+.pokedex-screen,
+.pokedex-left,
+.pokedex-right {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.pokedex-screen::-webkit-scrollbar,
+.pokedex-left::-webkit-scrollbar,
+.pokedex-right::-webkit-scrollbar {
+  display: none;
+}

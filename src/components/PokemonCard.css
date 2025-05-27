@@ -1,0 +1,221 @@
+
+
+.pokemon-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 15px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.pokemon-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.pokemon-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.pokemon-card:hover::before {
+  opacity: 1;
+}
+
+.pokemon-image-container {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pokemon-image {
+  position: absolute;
+  max-width: 100%;
+  height: auto;
+  transition: all 0.5s ease;
+  backface-visibility: hidden;
+}
+
+.pokemon-image.static {
+  transform-origin: center;
+}
+
+.pokemon-image.animated {
+  transform-origin: center;
+  scale: 1.5;
+}
+
+.fade-in {
+  opacity: 1;
+  transform: scale(1) rotate(0);
+  z-index: 2;
+}
+
+.fade-out {
+  opacity: 0;
+  transform: scale(0.8) rotate(-10deg);
+  z-index: 1;
+}
+
+@keyframes floating {
+  0% { transform: translateY(0) scale(1.5); }
+  50% { transform: translateY(-5px) scale(1.5); }
+  100% { transform: translateY(0) scale(1.5); }
+}
+
+.pokemon-image.animated.fade-in {
+  animation: floating 2s ease-in-out infinite;
+}
+
+.pokemon-info {
+  margin-top: 10px;
+  position: relative;
+  z-index: 3;
+}
+
+.pokemon-info h3 {
+  margin: 10px 0;
+  color: #333;
+  font-size: 1.1em;
+  text-transform: capitalize;
+}
+
+.pokemon-types {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.type-badge {
+  padding: 3px 8px;
+  border-radius: 15px;
+  font-size: 0.8em;
+  color: white;
+  text-transform: capitalize;
+  transition: all 0.3s ease;
+}
+
+.type-badge:hover {
+  transform: scale(1.1);
+}
+
+/* Adicione um efeito de pulso quando clicar no card */
+.pokemon-card:active {
+  transform: scale(0.98);
+}
+
+/* Type colors - mantido o mesmo */
+.normal { background-color: #A8A878; }
+.fire { background-color: #F08030; }
+.water { background-color: #6890F0; }
+.grass { background-color: #78C850; }
+.electric { background-color: #F8D030; }
+.ice { background-color: #98D8D8; }
+.fighting { background-color: #C03028; }
+.poison { background-color: #A040A0; }
+.ground { background-color: #E0C068; }
+.flying { background-color: #A890F0; }
+.psychic { background-color: #F85888; }
+.bug { background-color: #A8B820; }
+.rock { background-color: #B8A038; }
+.ghost { background-color: #705898; }
+.dragon { background-color: #7038F8; }
+.dark { background-color: #705848; }
+.steel { background-color: #B8B8D0; }
+.fairy { background-color: #EE99AC; }
+
+/* Mantenha seus estilos base e adicione estas regras de responsividade */
+
+/* Tablets e telas menores */
+@media (max-width: 1200px) {
+  .pokemon-card {
+    max-width: 180px;
+    margin: auto;
+  }
+
+  .pokemon-image-container {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* Tablets menores e celulares grandes */
+@media (max-width: 768px) {
+  .pokemon-card {
+    max-width: 160px;
+    padding: 12px;
+  }
+
+  .pokemon-image-container {
+    width: 100px;
+    height: 100px;
+  }
+
+  .pokemon-info h3 {
+    font-size: 12px;
+  }
+
+  .type-badge {
+    padding: 3px 6px;
+    font-size: 10px;
+  }
+}
+
+/* Celulares médios */
+@media (max-width: 480px) {
+  .pokemon-card {
+    max-width: 140px;
+    padding: 10px;
+  }
+
+  .pokemon-image-container {
+    width: 90px;
+    height: 90px;
+  }
+
+  .pokemon-info h3 {
+    font-size: 11px;
+  }
+
+  .type-badge {
+    padding: 2px 5px;
+    font-size: 9px;
+  }
+}
+
+/* Celulares pequenos */
+@media (max-width: 320px) {
+  .pokemon-card {
+    max-width: 120px;
+    padding: 8px;
+  }
+
+  .pokemon-image-container {
+    width: 80px;
+    height: 80px;
+  }
+
+  .pokemon-info h3 {
+    font-size: 10px;
+  }
+
+  .type-badge {
+    padding: 2px 4px;
+    font-size: 8px;
+  }
+}
